@@ -10,7 +10,7 @@ VERSION = '1.0.0'
 OUT_DIR = os.path.join(ROOT, 'dist')
 
 INCLUDE_DIRS = ['assets', 'config', 'layout', 'locales', 'sections', 'snippets', 'templates']
-INCLUDE_FILES = ['LICENSE.md', 'README.md', 'release-notes.md']
+INCLUDE_FILES = ['LICENSE.md', 'README.md']  # release-notes.md 不打进 zip（Theme Store 要求首发未发布主题不含它）
 EXCLUDE_EXT = {'.md'}  # assets 下的 md 不打进包里？保留，排除的是构建产物说明
 
 os.makedirs(OUT_DIR, exist_ok=True)

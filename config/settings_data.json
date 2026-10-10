@@ -1,7 +1,7 @@
 {
-  "current": "Default",
+  "current": "Auto Parts",
   "presets": {
-    "Default": {
+    "Auto Parts": {
       "logo_width": 90,
       "customer_account_menu": "customer-account-main-menu",
       "color_schemes": {
