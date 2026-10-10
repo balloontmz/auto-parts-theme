@@ -1,0 +1,14 @@
+{
+  "name": "autoparts-theme",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Auto Parts - automotive Shopify theme (Tailwind build pipeline)",
+  "scripts": {
+    "build:css": "tailwindcss -i tailwind/tailwind.input.css -o assets/tailwind.css --minify",
+    "watch:css": "tailwindcss -i tailwind/tailwind.input.css -o assets/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.0",
+    "tailwindcss": "^4.1.0"
+  }
+}

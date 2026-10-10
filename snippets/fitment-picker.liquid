@@ -1,0 +1,96 @@
+{% comment %}
+  Renders the fitment JS config + "My Garage" modal picker.
+  Included once from layout/theme.liquid, before </body>.
+  Usage: {% render 'fitment-picker' %}
+{% endcomment %}
+
+{%- if settings.enable_fitment -%}
+  <script>
+    window.FitmentConfig = {
+      dataUrl: '{{ "fitment-data.json" | asset_url }}',
+      filterBaseUrl: '{{ routes.all_products_collection_url }}',
+      refParam: {{ settings.dealer_ref_param | default: 'ref' | json }},
+      dealerAttribute: {{ settings.dealer_attribute_label | default: 'Dealer / Referral code' | json }},
+      customerLoggedIn: {% if customer %}true{% else %}false{% endif %},
+      strings: {
+        select_vehicle: {{ 'fitment.select_vehicle' | t | json }},
+        change_vehicle: {{ 'fitment.change_vehicle' | t | json }},
+        select_make: {{ 'fitment.select_make' | t | json }},
+        select_model: {{ 'fitment.select_model' | t | json }},
+        select_year: {{ 'fitment.select_year' | t | json }},
+        find_parts: {{ 'fitment.find_parts' | t | json }},
+        save_vehicle: {{ 'fitment.save_vehicle' | t | json }},
+        browse_all: {{ 'fitment.browse_all' | t | json }},
+        clear: {{ 'fitment.clear' | t | json }},
+        shopping_for: {{ 'fitment.shopping_for' | t | json }},
+        fits: {{ 'fitment.fits' | t | json }},
+        not_fit: {{ 'fitment.not_fit' | t | json }},
+        no_vehicle: {{ 'fitment.no_vehicle' | t | json }},
+        no_data: {{ 'fitment.no_data' | t | json }},
+        no_data_prompt: {{ 'fitment.no_data_prompt' | t | json }},
+        shop_fitting: {{ 'fitment.shop_fitting' | t | json }},
+        load_error: {{ 'fitment.load_error' | t | json }}
+      }
+    };
+  </script>
+
+  <div id="FitmentModal" class="fitment-modal" hidden role="dialog" aria-modal="true" aria-labelledby="FitmentModalTitle">
+    <div class="fitment-modal__panel" role="document">
+      <button type="button" class="fitment-modal__close" data-fitment-close aria-label="{{ 'accessibility.close' | t }}">
+        {{ 'icon-close.svg' | inline_asset_content }}
+      </button>
+
+      <p class="fitment-modal__kicker">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" style="width: 1.6rem; height: 1.6rem;">
+          <path d="M5 11l1.5-4.2A2 2 0 0 1 8.4 5.5h7.2a2 2 0 0 1 1.9 1.3L19 11" />
+          <path d="M4 11h16a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1" />
+          <path d="M3 12v3a1 1 0 0 0 1 1h1" />
+          <circle cx="7" cy="17" r="1.8" />
+          <circle cx="17" cy="17" r="1.8" />
+        </svg>
+        {{ 'fitment.my_garage' | t }}
+      </p>
+      <h2 class="fitment-modal__title" id="FitmentModalTitle">{{ 'fitment.modal_title' | t }}</h2>
+      <p class="fitment-modal__subtitle">{{ 'fitment.modal_subtitle' | t }}</p>
+
+      <form class="fitment-form" data-fitment-form novalidate>
+        <div class="fitment-form__item">
+          <label class="fitment-form__label" for="FitmentModalMake">
+            <span class="fitment-form__step">1</span>{{ 'fitment.make' | t }}
+          </label>
+          <div class="select">
+            <select id="FitmentModalMake" class="select__select" data-fitment-select="make"></select>
+            {{ 'icon-caret.svg' | inline_asset_content }}
+          </div>
+        </div>
+        <div class="fitment-form__item">
+          <label class="fitment-form__label" for="FitmentModalModel">
+            <span class="fitment-form__step">2</span>{{ 'fitment.model' | t }}
+          </label>
+          <div class="select">
+            <select id="FitmentModalModel" class="select__select" data-fitment-select="model"></select>
+            {{ 'icon-caret.svg' | inline_asset_content }}
+          </div>
+        </div>
+        <div class="fitment-form__item">
+          <label class="fitment-form__label" for="FitmentModalYear">
+            <span class="fitment-form__step">3</span>{{ 'fitment.year' | t }}
+          </label>
+          <div class="select">
+            <select id="FitmentModalYear" class="select__select" data-fitment-select="year"></select>
+            {{ 'icon-caret.svg' | inline_asset_content }}
+          </div>
+        </div>
+
+        <div class="fitment-form__actions">
+          <button type="button" class="button button--primary" data-fitment-go>
+            {{ 'fitment.find_parts' | t }}
+          </button>
+          <button type="button" class="button button--secondary" data-fitment-save>
+            {{ 'fitment.save_vehicle' | t }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+{%- endif -%}

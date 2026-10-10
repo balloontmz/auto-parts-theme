@@ -1,0 +1,26 @@
+{% comment %}
+  Renders the "My Garage" vehicle trigger button (header, hero, product page...).
+  Usage: {% render 'fitment-button' %}
+{% endcomment %}
+
+<button type="button" class="fitment-trigger" data-fitment-open>
+  <svg
+    class="fitment-trigger__icon"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.6"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <path d="M5 11l1.5-4.2A2 2 0 0 1 8.4 5.5h7.2a2 2 0 0 1 1.9 1.3L19 11" />
+    <path d="M4 11h16a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1" />
+    <path d="M3 12v3a1 1 0 0 0 1 1h1" />
+    <circle cx="7" cy="17" r="1.8" />
+    <circle cx="17" cy="17" r="1.8" />
+    <path d="M8.8 17h6.4M4 15.8V17" />
+  </svg>
+  <span class="fitment-trigger__label">{{ 'fitment.select_vehicle' | t }}</span>
+</button>

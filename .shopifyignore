@@ -1,0 +1,8 @@
+# 构建与交付辅助文件，不上传到 Shopify
+tailwind/*
+node_modules/*
+package.json
+package-lock.json
+tools/*
+README.md
+.shopifyignore

@@ -1,0 +1,17 @@
+{% comment %}
+  Guest-gated price for product cards.
+  Shows a login prompt when "hide prices from guests" is enabled and the
+  visitor is logged out; otherwise renders the standard price component.
+  Accepts:
+  - card_product: {Object} product object (required)
+
+  Usage: {% render 'ap-card-price', card_product: card_product %}
+{% endcomment %}
+
+{%- if settings.hide_prices_from_guests and customer == nil -%}
+  <p class="caption-large">
+    <a class="link underlined-link" href="{{ routes.account_login_url }}">{{ 'fitment.login_to_see_price' | t }}</a>
+  </p>
+{%- else -%}
+  {% render 'price', product: card_product, price_class: '', show_compare_at_price: true %}
+{%- endif -%}

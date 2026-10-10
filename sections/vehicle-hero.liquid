@@ -1,0 +1,244 @@
+{% comment %}
+  Auto parts hero with the inline Year / Make / Model vehicle picker.
+  Dark "workshop" panel + glass selector card + trust badges.
+{% endcomment %}
+
+{%- style -%}
+  .vehicle-hero--{{ section.id }} .section-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .vehicle-hero--{{ section.id }} .section-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="vehicle-hero vehicle-hero--{{ section.id }}">
+  <div class="section-padding{% if section.settings.full_width %} full-width{% else %} page-width{% endif %}">
+    <div class="vehicle-hero__inner">
+      <div class="vehicle-hero__grid">
+        <div class="vehicle-hero__content">
+          {%- if section.settings.kicker != blank -%}
+            <p class="vehicle-hero__kicker">{{ section.settings.kicker | escape }}</p>
+          {%- endif -%}
+          {%- if section.settings.heading != blank -%}
+            <h2 class="vehicle-hero__heading">{{ section.settings.heading | escape }}</h2>
+          {%- endif -%}
+          {%- if section.settings.subheading != blank -%}
+            <div class="vehicle-hero__subheading rte">{{ section.settings.subheading }}</div>
+          {%- endif -%}
+
+          {%- if section.blocks.size > 0 -%}
+            <div class="vehicle-hero__badges">
+              {%- for block in section.blocks -%}
+                {%- case block.type -%}
+                  {%- when 'badge' -%}
+                    <div class="vehicle-hero__badge" {{ block.shopify_attributes }}>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                        {%- case block.settings.icon -%}
+                          {%- when 'truck' -%}
+                            <path d="M1 3h13v13H1z" transform="translate(2 3) scale(0.82)" /><path d="M14 8h4l3 3v5h-7V8z" /><circle cx="6.5" cy="18.5" r="2" /><circle cx="17.5" cy="18.5" r="2" />
+                          {%- when 'shield' -%}
+                            <path d="M12 3l8 3v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-3z" /><path d="M9 12l2 2 4-4.5" />
+                          {%- when 'tools' -%}
+                            <path d="M14.7 6.3a4.5 4.5 0 0 0-6 5.6L3 17.6V21h3.4l5.7-5.7a4.5 4.5 0 0 0 5.6-6L14.5 12l-2.5-2.5 2.7-3.2z" />
+                          {%- else -%}
+                            <circle cx="12" cy="12" r="9" /><path d="M12 8h.01M12 11v5" />
+                        {%- endcase -%}
+                      </svg>
+                      <span>{{ block.settings.text | escape }}</span>
+                    </div>
+                {%- endcase -%}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- if settings.enable_fitment -%}
+          {%- liquid
+            assign hero_base = routes.all_products_collection_url
+            if section.settings.collection != blank
+              assign hero_base = section.settings.collection.url
+            endif
+          -%}
+          <div class="vehicle-hero__panel">
+            <form class="fitment-form" data-fitment-form data-fitment-base="{{ hero_base }}" novalidate>
+              <div class="fitment-form__item">
+                <label class="fitment-form__label" for="FitmentHeroMake-{{ section.id }}">
+                  <span class="fitment-form__step">1</span>{{ 'fitment.make' | t }}
+                </label>
+                <div class="select">
+                  <select id="FitmentHeroMake-{{ section.id }}" class="select__select" data-fitment-select="make"></select>
+                  {{ 'icon-caret.svg' | inline_asset_content }}
+                </div>
+              </div>
+              <div class="fitment-form__item">
+                <label class="fitment-form__label" for="FitmentHeroModel-{{ section.id }}">
+                  <span class="fitment-form__step">2</span>{{ 'fitment.model' | t }}
+                </label>
+                <div class="select">
+                  <select id="FitmentHeroModel-{{ section.id }}" class="select__select" data-fitment-select="model"></select>
+                  {{ 'icon-caret.svg' | inline_asset_content }}
+                </div>
+              </div>
+              <div class="fitment-form__item">
+                <label class="fitment-form__label" for="FitmentHeroYear-{{ section.id }}">
+                  <span class="fitment-form__step">3</span>{{ 'fitment.year' | t }}
+                </label>
+                <div class="select">
+                  <select id="FitmentHeroYear-{{ section.id }}" class="select__select" data-fitment-select="year"></select>
+                  {{ 'icon-caret.svg' | inline_asset_content }}
+                </div>
+              </div>
+              <div class="fitment-form__actions">
+                <button type="button" class="button button--primary" data-fitment-go>
+                  {{ 'fitment.find_parts' | t }}
+                </button>
+                <a class="button button--secondary vehicle-hero__ghost" href="{{ hero_base }}">
+                  {{ 'fitment.browse_all' | t }}
+                </a>
+              </div>
+            </form>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% style %}
+  .vehicle-hero__inner.full-width {
+    border-radius: 0;
+  }
+  .vehicle-hero--{{ section.id }} .section-padding.full-width {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .vehicle-hero--{{ section.id }} .section-padding.full-width .vehicle-hero__grid {
+    max-width: var(--page-width);
+    margin: 0 auto;
+  }
+  .vehicle-hero__ghost {
+    background: transparent;
+    color: #fff;
+    box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.4);
+  }
+  .vehicle-hero__ghost:hover {
+    box-shadow: inset 0 0 0 1.5px #fff;
+    color: #fff;
+  }
+  .vehicle-hero__panel .button--primary {
+    background: #fff;
+    color: var(--color-ink);
+  }
+  .vehicle-hero__panel .button--primary:hover {
+    box-shadow: 0 8px 24px -8px rgba(255, 255, 255, 0.4);
+  }
+{%- endstyle %}
+
+{% schema %}
+{
+  "name": "Vehicle hero",
+  "tag": "section",
+  "class": "section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "default": "Quality auto parts, guaranteed to fit",
+      "label": "Kicker"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "The right part for your car. Guaranteed.",
+      "label": "Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "default": "<p>Select your vehicle and we will show you only the parts that fit — brakes, filters, suspension and more.</p>",
+      "label": "Subheading"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Filter within collection",
+      "info": "Optional. Leave empty to search all products."
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": false,
+      "label": "Full width"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Trust badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "options": [
+            { "value": "truck", "label": "Truck" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "tools", "label": "Tools" },
+            { "value": "info", "label": "Info" }
+          ],
+          "default": "truck",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "default": "Fast shipping",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "Vehicle hero",
+      "blocks": [
+        { "type": "badge", "settings": { "icon": "truck", "text": "Fast shipping" } },
+        { "type": "badge", "settings": { "icon": "shield", "text": "Fitment guarantee" } },
+        { "type": "badge", "settings": { "icon": "tools", "text": "Expert support" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

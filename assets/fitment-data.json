@@ -1,0 +1,89 @@
+{
+  "updated": "2026-10-09",
+  "note": "Sample vehicle data for development/demo. Replace with the client's real fitment data at import time (see docs in README.md). Structure: makes[] -> models[] -> year_from/year_to.",
+  "makes": [
+    {
+      "name": "Ford",
+      "models": [
+        { "name": "Ranger", "year_from": 2011, "year_to": 2024 },
+        { "name": "Everest", "year_from": 2015, "year_to": 2024 }
+      ]
+    },
+    {
+      "name": "Holden",
+      "models": [
+        { "name": "Colorado", "year_from": 2008, "year_to": 2020 }
+      ]
+    },
+    {
+      "name": "Hyundai",
+      "models": [
+        { "name": "i30", "year_from": 2007, "year_to": 2024 },
+        { "name": "Tucson", "year_from": 2004, "year_to": 2024 }
+      ]
+    },
+    {
+      "name": "Isuzu",
+      "models": [
+        { "name": "D-Max", "year_from": 2003, "year_to": 2024 },
+        { "name": "MU-X", "year_from": 2013, "year_to": 2024 }
+      ]
+    },
+    {
+      "name": "Kia",
+      "models": [
+        { "name": "Cerato", "year_from": 2004, "year_to": 2024 },
+        { "name": "Sportage", "year_from": 2004, "year_to": 2024 }
+      ]
+    },
+    {
+      "name": "Mazda",
+      "models": [
+        { "name": "BT-50", "year_from": 2006, "year_to": 2024 },
+        { "name": "CX-5", "year_from": 2012, "year_to": 2024 },
+        { "name": "Mazda 3", "year_from": 2003, "year_to": 2024 }
+      ]
+    },
+    {
+      "name": "Mitsubishi",
+      "models": [
+        { "name": "Triton", "year_from": 2006, "year_to": 2024 },
+        { "name": "Pajero", "year_from": 2000, "year_to": 2021 },
+        { "name": "Outlander", "year_from": 2003, "year_to": 2024 }
+      ]
+    },
+    {
+      "name": "Nissan",
+      "models": [
+        { "name": "Navara", "year_from": 2005, "year_to": 2024 },
+        { "name": "Pathfinder", "year_from": 2005, "year_to": 2024 },
+        { "name": "X-Trail", "year_from": 2001, "year_to": 2024 }
+      ]
+    },
+    {
+      "name": "Subaru",
+      "models": [
+        { "name": "Forester", "year_from": 1997, "year_to": 2024 },
+        { "name": "Outback", "year_from": 2000, "year_to": 2024 }
+      ]
+    },
+    {
+      "name": "Toyota",
+      "models": [
+        { "name": "Hilux", "year_from": 2005, "year_to": 2024 },
+        { "name": "Landcruiser", "year_from": 1998, "year_to": 2024 },
+        { "name": "Prado", "year_from": 2003, "year_to": 2024 },
+        { "name": "RAV4", "year_from": 2005, "year_to": 2024 },
+        { "name": "Corolla", "year_from": 2005, "year_to": 2024 },
+        { "name": "Camry", "year_from": 2006, "year_to": 2024 }
+      ]
+    },
+    {
+      "name": "Volkswagen",
+      "models": [
+        { "name": "Amarok", "year_from": 2011, "year_to": 2024 },
+        { "name": "Golf", "year_from": 2004, "year_to": 2024 }
+      ]
+    }
+  ]
+}

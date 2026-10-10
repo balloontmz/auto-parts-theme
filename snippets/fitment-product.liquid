@@ -1,0 +1,91 @@
+{% comment %}
+  Renders the "Will it fit my car?" widget on the product page.
+  Accepts:
+  - product: {Object} product object (required)
+  - block: {Object} main-product section block (optional, for shopify_attributes)
+
+  Reads fitment metafields:
+  - custom.fitment_make  (single line text, list)
+  - custom.fitment_model (single line text, list)
+  - custom.fitment_year  (single line text, list of 4-digit years)
+  - custom.fitment_json  (JSON: [{ "make": "...", "model": "...", "year_from": 2005, "year_to": 2015 }])
+
+  Usage: {% render 'fitment-product', product: product, block: block %}
+{% endcomment %}
+
+{%- liquid
+  assign fit_makes = product.metafields.custom.fitment_make.value
+  assign fit_models = product.metafields.custom.fitment_model.value
+  assign fit_years = product.metafields.custom.fitment_year.value
+  assign fit_json = product.metafields.custom.fitment_json.value
+-%}
+
+<div class="fitment-product quick-add-hidden" {{ block.shopify_attributes }}>
+  <div data-fitment-check>
+    {%- if block.settings.heading != blank -%}
+      <h3 class="fitment-product__heading">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M5 11l1.5-4.2A2 2 0 0 1 8.4 5.5h7.2a2 2 0 0 1 1.9 1.3L19 11" />
+          <path d="M4 11h16a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1" />
+          <path d="M3 12v3a1 1 0 0 0 1 1h1" />
+          <circle cx="7" cy="17" r="1.8" />
+          <circle cx="17" cy="17" r="1.8" />
+        </svg>
+        {{ block.settings.heading | escape }}
+      </h3>
+    {%- endif -%}
+    <div data-fitment-result></div>
+  </div>
+
+  {%- if block.settings.show_compatible -%}
+    {%- if fit_json != blank -%}
+      <details class="fitment-compatible">
+        <summary>
+          <span>{{ 'fitment.compatible_with' | t }} ({{ fit_json | size }})</span>
+          {{ 'icon-caret.svg' | inline_asset_content }}
+        </summary>
+        <div>
+          <ul role="list">
+            {%- for entry in fit_json -%}
+              <li>
+                {{ entry.make }}
+                {%- if entry.model %} {{ entry.model }}{% endif -%}
+                {%- if entry.year_from and entry.year_to %} ({{ entry.year_from }}–{{ entry.year_to }}){% endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      </details>
+    {%- elsif fit_makes != blank -%}
+      <details class="fitment-compatible">
+        <summary>
+          <span>{{ 'fitment.compatible_with' | t }}</span>
+          {{ 'icon-caret.svg' | inline_asset_content }}
+        </summary>
+        <div>
+          <ul role="list">
+            {%- for make in fit_makes -%}
+              <li>{{ make }}</li>
+            {%- endfor -%}
+            {%- for model in fit_models -%}
+              <li>{{ model }}</li>
+            {%- endfor -%}
+            {%- if fit_years != blank -%}
+              {%- assign sorted_years = fit_years | sort -%}
+              <li>{{ sorted_years.first }}–{{ sorted_years.last }}</li>
+            {%- endif -%}
+          </ul>
+        </div>
+      </details>
+    {%- endif -%}
+  {%- endif -%}
+
+  <script>
+    window.FitmentProductData = {
+      makes: {{ fit_makes | json }},
+      models: {{ fit_models | json }},
+      years: {{ fit_years | json }},
+      universal: {{ product.metafields.custom.fitment_universal.value | json }}
+    };
+  </script>
+</div>
